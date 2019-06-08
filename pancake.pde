@@ -17,17 +17,29 @@ PVector location;  // Location of shape
 PVector velocity;  // Velocity of shape
 PVector gravity;   // Gravity acts at the shape's acceleration
 
+Moonlander moonlander;
+//int BPM =120;
+float initTimeScene1=0;
+
 void setup() {
 
   size(880, 660, P3D);
+  noCursor();
+  frameRate(60);
   location = new PVector(440,330);
   velocity = new PVector(0,2.1);
   gravity = new PVector(0,0.2);
+  moonlander = Moonlander.initWithSoundtrack(this, "data/nooran_cloudgarden.mp3", 120, 8);
+  moonlander.start();
+  
 }
 
 void draw() {
-  background(0);
-  
+  moonlander.update();
+  double value = moonlander.getValue("data/nooran_cloudgarden.mp3");
+  background((int)value);
+  //background(0);
+
   // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
@@ -36,14 +48,13 @@ void draw() {
   if (location.y > (height - 150)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -1; 
+    velocity.y = velocity.y * -0.977; 
     //location.y = height;
   }
 
   // Display circle at location vector
-  stroke(255);
-  strokeWeight(2);
-  fill(97);
+  noStroke();
+  fill(244,143,177);
   ellipse(location.x,location.y,200,200);
 
   //stroke(255, 50);
@@ -55,6 +66,4 @@ void draw() {
   //sphereDetail(mouseX / 4);
   //sphereDetail(location.x,location.y);
   //sphere(40);
-
-
 }
