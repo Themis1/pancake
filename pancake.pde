@@ -21,6 +21,11 @@ Moonlander moonlander;
 //int BPM =120;
 //float initTimeScene1=0;
 
+//MILLAN
+float yoff = 0;
+float xoff = 0.0;
+//MILLAN
+
 void setup() {
   moonlander = Moonlander.initWithSoundtrack(this, "nooran_cloudgarden.mp3", 120, 8);
   size(880, 660, P3D);
@@ -39,6 +44,25 @@ void draw() {
   int scene = moonlander.getIntValue("scene");
   //double value = moonlander.getValue("/data/nooran_cloudgarden.mp3");
   //background((int)value);
+  
+  //MILLAN
+  background(127,0,0); //yläosan väri
+  fill(255,0,0); // alaosan väri
+  beginShape();
+  float xoff = 0;
+  //Horisontaalisesti määritetty loopilla
+  for (float xmuuttuja = 0; xmuuttuja <= width; xmuuttuja ++) 
+    {
+    //ymuuttuja mäpätty noisen suhteen
+    float ymuuttuja = map(noise(xoff, yoff), 0, 1, 200, 300);
+    vertex(xmuuttuja, ymuuttuja);
+    xoff = xoff + 0.05;
+    }
+    yoff = yoff + 0.01;
+    vertex(width, height);
+    vertex(0, height);
+    endShape(CLOSE);
+  //MILLAN
   
   if(scene == 0) {
     drawScene0();
