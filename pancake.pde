@@ -17,6 +17,12 @@ PVector location;  // Location of shape
 PVector velocity;  // Velocity of shape
 PVector gravity;   // Gravity acts at the shape's acceleration
 
+int karvat = 16000;
+Pelo[] lista;
+float radio = 0;
+float rx = 0;
+float ry =0;
+
 Moonlander moonlander;
 //float initTimeScene1=0;
 
@@ -29,12 +35,19 @@ PImage img;
 
 void setup() {
   moonlander = Moonlander.initWithSoundtrack(this, "nooran_cloudgarden.mp3", 120, 8);
-  size(880, 660, P3D);
+  size(1920, 1080, P3D);
   noCursor();
   //frameRate(60);
-  location = new PVector(440,330);
-  velocity = new PVector(0,2.1);
-  gravity = new PVector(0,0.2); 
+  location = new PVector(960,540);
+  velocity = new PVector(0,2);
+  gravity = new PVector(0,1);
+  radio = height/6;
+
+  lista = new Pelo[karvat];
+  for (int i = 0; i < lista.length; i++) {
+    lista[i] = new Pelo();
+  }
+  noiseDetail(3);
   
   img = loadImage("tytyt.jpeg");
 
@@ -76,7 +89,7 @@ void draw() {
     drawScene2();
   } else if (scene == 3) {
     drawScene3();
-  } else if (scene == 4) { // EKA VAIHTO
+  } else if (scene == 4) { // EKA VAIHTO -> KARVAPALLO
     drawScene4();
   } else if (scene == 5) { // VÄHÄN LISÄÄ EDELLISEEN
     drawScene5();
@@ -106,100 +119,122 @@ void draw() {
   //sphere(40);
 }
 
+// *****************************************************************************************
 void drawScene0() {
   // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
   // Display circle at location vector
+  translate(location.x, location.y);
   noStroke();
   fill(244,143,177);
-  ellipse(location.x,location.y,200,200);
+  sphere(radio);
+  //ellipse(location.x,location.y,200,200);
 }
 
+// *****************************************************************************************
 void drawScene1() {
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
   // Display circle at location vector
+  translate(location.x, location.y);
   noStroke();
   fill(255,224,130);
-  ellipse(location.x,location.y,200,200);
+  sphere(radio);
+  //ellipse(location.x,location.y,200,200);
 }
 
+// *****************************************************************************************
 void drawScene2() {
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
   // Display circle at location vector
+  translate(location.x, location.y);
   noStroke();
   fill(77,208,225);
-  ellipse(location.x,location.y,200,200);
+  sphere(radio);
+  //ellipse(location.x,location.y,200,200);
 }
 
+// ****************************************************************************************
 void drawScene3() {
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
   // Display circle at location vector
+  translate(location.x, location.y);
   noStroke();
-  fill(142,36,170);
-  ellipse(location.x,location.y,200,200);
+  fill(77,208,225);
+  sphere(radio);
 }
 
-// MUSIIKKI MUUTTUU TÄSSÄ KOHTAA ***************************************************
+// MUSIIKKI MUUTTUU TÄSSÄ KOHTAA - VOILA KARVAPALLO! **************************************
 void drawScene4() {
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
-
-  // Display circle at location vector
+  
+  float rxp = 500;
+  float ryp = 500;
+  rx = rx*0.9 + rxp*0.1;
+  ry = ry*0.9 + ryp*0.1;
+  translate(location.x, location.y);
+  //translate(width/2, height/2);
+  rotateY(rx);
+  rotateX(ry);
+  fill(0);
   noStroke();
-  fill(33,33,33);
-  ellipse(location.x,location.y,200,200);
+  sphere(radio);
+
+  for (int i = 0; i < lista.length; i++) {
+    lista[i].dibujar();
+  }
 }
 
 // MUSIIKKI MUUTTUU TÄSSÄ KOHTAA 2. KERRAN ********************************************
@@ -209,17 +244,27 @@ void drawScene5() {
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
-  // Display circle at location vector
+  float rxp = 500;
+  float ryp = 500;
+  rx = rx*0.9 + rxp*0.1;
+  ry = ry*0.9 + ryp*0.1;
+  translate(location.x, location.y);
+  rotateY(rx);
+  rotateX(ry);
+  fill(0);
   noStroke();
-  fill(255,87,34);
-  ellipse(location.x,location.y,200,200);
+  sphere(radio);
+
+  for (int i = 0; i < lista.length; i++) {
+    lista[i].dibujar();
+  }
 }
 
 // ************************************************************************************
@@ -229,17 +274,18 @@ void drawScene6() {
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
   // Display circle at location vector
+  translate(location.x, location.y);
   noStroke();
-  fill(255,224,130);
-  ellipse(location.x,location.y,200,200);
+  fill(77,208,225);
+  sphere(radio);
 }
 
 // **************************************************************************************
@@ -249,17 +295,18 @@ void drawScene7() {
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
   // Display circle at location vector
+  translate(location.x, location.y);
   noStroke();
-  fill( 238, 238, 238 );
-  ellipse(location.x,location.y,200,200);
+  fill(77,208,225);
+  sphere(radio);
 }
 
 // **************************************************************************************
@@ -269,17 +316,18 @@ void drawScene8() {
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
   // Display circle at location vector
+  translate(location.x, location.y);
   noStroke();
-  fill( 41, 182, 246 );
-  ellipse(location.x,location.y,200,200);
+  fill(77,208,225);
+  sphere(radio);
 }
 
 // ************************************************************************************
@@ -290,17 +338,18 @@ void drawScene9() {
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
   // Display circle at location vector
+  translate(location.x, location.y);
   noStroke();
-  fill( 238, 238, 238 );
-  ellipse(location.x,location.y,200,200);
+  fill(77,208,225);
+  sphere(radio);
 }
 
 // IHAN LOPPUHÄIVYTYS ********************************************************************
@@ -310,10 +359,10 @@ void drawScene10() {
   // Add gravity to velocity
   velocity.add(gravity);
   
-  if (location.y > (height - 150)) {
+  if (location.y > (height - 300)) {
     // We're reducing velocity ever so slightly 
     // when it hits the bottom of the window
-    velocity.y = velocity.y * -0.977; 
+    velocity.y = velocity.y * -0.96; 
     //location.y = height;
   }
 
@@ -322,4 +371,91 @@ void drawScene10() {
   fill(33,33,33);
   ellipse(location.x,location.y,200,200);
   background(20);
+}
+
+// ***************************************************************************************
+// ********************** KARVAPALLOLUOKKA ***********************************************
+class Pelo
+{
+  float z = random(-radio, radio);
+  float phi = random(TWO_PI);
+  float largo = random(1.15, 1.2);
+  float theta = asin(z/radio);
+
+  Pelo() { // what's wrong with a constructor here
+    z = random(-radio, radio);
+    phi = random(TWO_PI);
+    largo = random(1.15, 1.2);
+    theta = asin(z/radio);
+  }
+
+  void dibujar() {
+
+    float off = (noise(millis() * 0.0005, sin(phi))-0.5) * 0.3;
+    float offb = (noise(millis() * 0.0007, sin(z) * 0.01)-0.5) * 0.3;
+
+    float thetaff = theta+off;
+    float phff = phi+offb;
+    float x = radio * cos(theta) * cos(phi);
+    float y = radio * cos(theta) * sin(phi);
+    float z = radio * sin(theta);
+
+    float xo = radio * cos(thetaff) * cos(phff);
+    float yo = radio * cos(thetaff) * sin(phff);
+    float zo = radio * sin(thetaff);
+
+    float xb = xo * largo;
+    float yb = yo * largo;
+    float zb = zo * largo;
+
+    strokeWeight(1);
+    beginShape(LINES);
+    stroke(0);
+    vertex(x, y, z);
+    stroke(200, 150);
+    vertex(xb, yb, zb);
+    endShape();
+  }
+}
+
+class Pelo2 {
+  float z = random(-radio, radio);
+  float phi = random(TWO_PI);
+  float largo = random(1.15, 1.2);
+  float theta = asin(z/radio);
+
+  Pelo2() { // what's wrong with a constructor here
+    z = random(-radio, radio);
+    phi = random(TWO_PI);
+    largo = random(1.15, 1.2);
+    theta = asin(z/radio);
+  }
+
+  void dibujar() {
+
+    float off = (noise(millis() * 0.0005, sin(phi))-0.5) * 0.3;
+    float offb = (noise(millis() * 0.0007, sin(z) * 0.01)-0.5) * 0.3;
+
+    float thetaff = theta+off;
+    float phff = phi+offb;
+    float x = radio * cos(theta) * cos(phi);
+    float y = radio * cos(theta) * sin(phi);
+    float z = radio * sin(theta);
+
+    float xo = radio * cos(thetaff) * cos(phff);
+    float yo = radio * cos(thetaff) * sin(phff);
+    float zo = radio * sin(thetaff);
+
+    float xb = xo * largo;
+    float yb = yo * largo;
+    float zb = zo * largo;
+
+    strokeWeight(3);
+    beginShape(LINES);
+    stroke(0);
+    vertex(x, y, z);
+    stroke(200, 150);
+    vertex(xb, yb, zb);
+    endShape();
+  }
 }
