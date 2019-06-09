@@ -29,12 +29,11 @@ Moonlander moonlander;
 //MILLAN
 float yoff = 0;
 float xoff = 0;
-PImage stars;
-//Polygon poly;
-int point = 16;
-//MILLAN
 PImage lettu;
 PImage clouds3;
+PImage clouds4;
+PImage clouds5;
+PImage cloud1;
 
   PImage [] ground = new PImage[10];
   float [] xx = new float [10];
@@ -71,23 +70,12 @@ void setup() {
   velocity = new PVector(0,2);
   gravity = new PVector(0,1);
   //MILLAN
-  stars = loadImage("stars.jpg");
+  //stars = loadImage("stars.jpg");
   clouds3 = loadImage("cloudysky03.jpg");
-    PShape star = createShape();  // First we make the PShape
-  star.beginShape();
-  star.noStroke();
-  star.fill(0, 127);
-  star.vertex(0, -50);
-  star.vertex(14, -20);
-  star.vertex(47, -15);
-  star.vertex(23, 7);
-  star.vertex(29, 40);
-  star.vertex(0, 25);
-  star.vertex(-29, 40);
-  star.vertex(-23, 7);
-  star.vertex(-47, -15);
-  star.vertex(-14, -20);
-  star.endShape(CLOSE);
+  clouds4 = loadImage("cloudysky04.jpg");
+    clouds5 = loadImage("cloudysky05.jpg");
+
+  cloud1 = loadImage("cloud1.jpg");  
   //MIlLAN
   radio = height/6;
 
@@ -187,8 +175,9 @@ void polygon(float x, float y, float radius, int npoints) {
 // **************************************** EKA SKENE *************************************
 void drawScene0() {
     //MILLAN
-  background(255); //yläosan väri
-  fill(0); // alaosan väri
+  //background( 255, 205, 210 ); //yläosan väri
+  background(cloud1);
+  fill(209,233,233); // alaosan väri
   beginShape();
   float xoff = 0;
   //Horisontaalisesti määritetty loopilla
@@ -230,8 +219,9 @@ void drawScene0() {
 // ******************************************* SKENE 1 ************************************
 void drawScene1() {
     //MILLAN
-  background(252,252,252); //yläosan väri
-  fill(0); // alaosan väri
+  //background( 255, 205, 210 ); //yläosan väri
+  background(cloud1);
+  fill(209,233,233); // alaosan väri
   beginShape();
   float xoff = 0;
   //Horisontaalisesti määritetty loopilla
@@ -272,8 +262,9 @@ void drawScene1() {
 // ************************************************ SKENE 2 *******************************
 void drawScene2() {
     //MILLAN
-  background(255); //yläosan väri
-  fill(0); // alaosan väri
+  //background( 255, 205, 210 ); //yläosan väri
+  background(cloud1);
+  fill(209,233,233); // alaosan väri
   beginShape();
   float xoff = 0;
   //Horisontaalisesti määritetty loopilla
@@ -313,8 +304,9 @@ void drawScene2() {
 // ***************************************** SKENE 3 **************************************
 void drawScene3() {
     //MILLAN
-  background(127); //yläosan väri
-  fill(0); // alaosan väri
+  //background( 255, 205, 210 ); //yläosan väri
+  background(cloud1);
+  fill(209,233,233); // alaosan väri
   beginShape();
   float xoff = 0;
   //Horisontaalisesti määritetty loopilla
@@ -508,11 +500,11 @@ void drawScene6() {
 // ******************************************** SKENE 7 ***********************************
 void drawScene7() {
   
-  int x = frameCount % clouds3.width;
-  copy(clouds3, x, 0, clouds3.width, height, 0, 0, clouds3.width, height);
-  int x2 = clouds3.width - x;
+  int x = frameCount % clouds4.width;
+  copy(clouds4, x, 0, clouds4.width, height, 0, 0, clouds4.width, height);
+  int x2 = clouds4.width - x;
   if (x2 < width) {
-    copy(clouds3, 0, 0, clouds3.width, height, x2, 0, clouds3.width, height);
+    copy(clouds4, 0, 0, clouds4.width, height, x2, 0, clouds4.width, height);
   }
   /*
   //MILLAN
@@ -564,11 +556,11 @@ void drawScene7() {
 // ********************************************** SKENE 8 *********************************
 void drawScene8() {
   
-  int x = frameCount % clouds3.width;
-  copy(clouds3, x, 0, clouds3.width, height, 0, 0, clouds3.width, height);
-  int x2 = clouds3.width - x;
+  int x = frameCount % clouds5.width;
+  copy(clouds5, x, 0, clouds5.width, height, 0, 0, clouds5.width, height);
+  int x2 = clouds5.width - x;
   if (x2 < width) {
-    copy(clouds3, 0, 0, clouds3.width, height, x2, 0, clouds3.width, height);
+    copy(clouds5, 0, 0, clouds5.width, height, x2, 0, clouds5.width, height);
   }
   /*
   background(stars); //yläosan väri
@@ -618,11 +610,11 @@ void drawScene8() {
 
 // ************************************** SKENE 9 *****************************************
 void drawScene9() {
-  int x = frameCount % clouds3.width;
-  copy(clouds3, x, 0, clouds3.width, height, 0, 0, clouds3.width, height);
-  int x2 = clouds3.width - x;
+  int x = frameCount % clouds5.width;
+  copy(clouds5, x, 0, clouds5.width, height, 0, 0, clouds5.width, height);
+  int x2 = clouds5.width - x;
   if (x2 < width) {
-    copy(clouds3, 0, 0, clouds3.width, height, x2, 0, clouds3.width, height);
+    copy(clouds5, 0, 0, clouds5.width, height, x2, 0, clouds5.width, height);
   }
   /*
   
@@ -675,7 +667,7 @@ void drawScene9() {
 // IHAN LOPPUHÄIVYTYS *********************** LOPPU ***************************************
 void drawScene10() {
   //MILLAN
-   background(stars); //yläosan väri
+   background(clouds3); //yläosan väri
    fill (0);
   beginShape();
   float xoff = 0;
@@ -778,7 +770,7 @@ class Pelo
     beginShape(LINES);
     stroke(0 );
     vertex(x, y, z);
-    stroke( 238, 238, 238 );
+    stroke(  252, 228, 236 );
     vertex(xb, yb, zb);
     endShape();
   }
@@ -806,7 +798,7 @@ class Pelo
     beginShape(LINES);
     stroke(0 );
     vertex(x, y, z);
-    stroke( 238, 238, 238 );
+    stroke(248, 187, 208 );
     vertex(xb, yb, zb);
     endShape();
   }
@@ -834,7 +826,7 @@ class Pelo
     beginShape(LINES);
     stroke(0 );
     vertex(x, y, z);
-    stroke( 238, 238, 238 );
+    stroke(  3, 169, 244 );
     vertex(xb, yb, zb);
     endShape();
   }
@@ -862,7 +854,7 @@ class Pelo
     beginShape(LINES);
     stroke(0 );
     vertex(x, y, z);
-    stroke( 238, 238, 238 );
+    stroke(  244, 143, 177 );
     vertex(xb, yb, zb);
     endShape();
   }
@@ -890,7 +882,7 @@ class Pelo
     beginShape(LINES);
     stroke(0 );
     vertex(x, y, z);
-    stroke( 238, 238, 238 );
+    stroke(  76,216,99 );
     vertex(xb, yb, zb);
     endShape();
   }
