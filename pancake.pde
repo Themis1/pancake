@@ -9,8 +9,9 @@ import moonlander.library.*;
 
 /**
  * Pannukakkuja
- * 
- * 
+ * made by Laura North, Milla Järvi and Noora Heiskanen
+ * music "Cloud Garden" & Images by Noora Heiskanen
+ * thx David Pena for fur ball inspiration
  */
 
 PVector location;  // Location of shape
@@ -24,9 +25,7 @@ float rx = 0;
 float ry =0;
 
 Moonlander moonlander;
-//float initTimeScene1=0;
 
-//MILLAN
 float yoff = 0;
 float xoff = 0;
 PImage lettu;
@@ -35,79 +34,33 @@ PImage clouds4;
 PImage clouds5;
 PImage cloud1;
 
-  PImage [] ground = new PImage[10];
-  float [] xx = new float [10];
-  
-  float blockW, blockH, blockX, blockY, blockS;
-  //float grav = 3;
-  
-  //float theta = 0.0f;
-  //float radius = 1;
-  
-  float cx, cy;
-  
-  int speed = 5;
-  int bgSpeed = 2;
-  
-  
-int xspacing = 8;   // How far apart should each horizontal location be spaced
-int w;              // Width of entire wave
-int maxwaves = 4;   // total # of waves to add together
-
-float theta = 0.0;
-float[] amplitude = new float[maxwaves];   // Height of wave
-float[] dx = new float[maxwaves];          // Value for incrementing X, to be calculated as a function of period and xspacing
-float[] yvalues;
-
 
 // **************************** SETUP ****************************************************
 void setup() {
   moonlander = Moonlander.initWithSoundtrack(this, "nooran_cloudgarden.mp3", 120, 8);
   size(1920, 1080, P3D);
   noCursor();
-  //frameRate(60);
+
   location = new PVector(960,540);
   velocity = new PVector(0,2);
   gravity = new PVector(0,1);
-  //MILLAN
-  //stars = loadImage("stars.jpg");
+
   clouds3 = loadImage("cloudysky03.jpg");
   clouds4 = loadImage("cloudysky04.jpg");
-    clouds5 = loadImage("cloudysky05.jpg");
-
+  clouds5 = loadImage("cloudysky05.jpg");
   cloud1 = loadImage("cloud1.jpg");  
-  //MIlLAN
+
   radio = height/6;
 
   lista = new Pelo[karvat];
   for (int i = 0; i < lista.length; i++) {
     lista[i] = new Pelo();
   }
-  noiseDetail(3);
+  
+  //noiseDetail(3);
   
   lettu = loadImage("lettu.png");
   
-  blockW = 100;
-  blockH = blockW;
-  blockY = height - blockW;
-  blockS = 5;
-  
-  cx = width * 0.5f;
-  cy = height * 0.5f;
-  
-  for (int i = 0; i < 10; i ++) {
-    ground[i] = loadImage("ground.png");
-    //xx[i] = blockW * i;
-  }
-  
-  w = width + 16;
-  for (int i = 0; i < maxwaves; i++) {
-    amplitude[i] = random(10,30);
-    float period = random(100,300); // How many pixels before the wave repeats
-    dx[i] = (TWO_PI / period) * xspacing;
-  }
-
-  yvalues = new float[w/xspacing];
 
   moonlander.start(); 
 }
@@ -116,12 +69,8 @@ void setup() {
 void draw() {
   moonlander.update();
   background(0);
-  //sprites();
-  //calcWave();
-  //renderWave();
+
   int scene = moonlander.getIntValue("scene");
-  //double value = moonlander.getValue("");
-  //background((int)value);
  
   if(scene == 0) { // ALKAA
     drawScene0();
@@ -150,32 +99,11 @@ void draw() {
     super.stop();
     exit();
   }
-    //stroke(255, 50);
-  //translate(50, 50, 0);
-  //rotateX(mouseY * 0.05);
-  //rotateY(mouseX * 0.05);
-  //fill(mouseX * 2, 0, 160);
-  //fill(10);
-  //sphereDetail(mouseX / 4);
-  //sphereDetail(location.x,location.y);
-  //sphere(40);
-}
-
-void polygon(float x, float y, float radius, int npoints) {
-  float angle = TWO_PI / npoints;
-  beginShape();
-  for (float a = 0; a < TWO_PI; a += angle) {
-    float sx = x + cos(a) * radius;
-    float sy = y + sin(a) * radius;
-    vertex(sx, sy);
-  }
-  endShape(CLOSE);
 }
 
 // **************************************** EKA SKENE *************************************
 void drawScene0() {
-    //MILLAN
-  //background( 255, 205, 210 ); //yläosan väri
+
   background(cloud1);
   fill(209,233,233); // alaosan väri
   beginShape();
@@ -192,8 +120,7 @@ void drawScene0() {
     vertex(width, height);
     vertex(0, height);
     endShape(CLOSE);
-  //MILLAN
-  // Add velocity to the location.
+
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
@@ -205,10 +132,7 @@ void drawScene0() {
     //location.y = height;
   }
 
-
-  
-    translate(location.x, location.y);
-  //noStroke();
+  translate(location.x, location.y);
   stroke(255, 50);
   sphereDetail(25);
   fill( 33, 33, 33 );
@@ -218,8 +142,6 @@ void drawScene0() {
 
 // ******************************************* SKENE 1 ************************************
 void drawScene1() {
-    //MILLAN
-  //background( 255, 205, 210 ); //yläosan väri
   background(cloud1);
   fill(209,233,233); // alaosan väri
   beginShape();
@@ -236,8 +158,7 @@ void drawScene1() {
     vertex(width, height);
     vertex(0, height);
     endShape(CLOSE);
-  //MILLAN
-// Add velocity to the location.
+    
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
@@ -251,7 +172,7 @@ void drawScene1() {
 
   // Display circle at location vector
     translate(location.x, location.y);
-  //noStroke();
+
   stroke(255, 50);
   sphereDetail(25);
   fill( 33, 33, 33 );
@@ -261,8 +182,6 @@ void drawScene1() {
 
 // ************************************************ SKENE 2 *******************************
 void drawScene2() {
-    //MILLAN
-  //background( 255, 205, 210 ); //yläosan väri
   background(cloud1);
   fill(209,233,233); // alaosan väri
   beginShape();
@@ -279,8 +198,7 @@ void drawScene2() {
     vertex(width, height);
     vertex(0, height);
     endShape(CLOSE);
-  //MILLAN
-// Add velocity to the location.
+
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
@@ -303,8 +221,6 @@ void drawScene2() {
 
 // ***************************************** SKENE 3 **************************************
 void drawScene3() {
-    //MILLAN
-  //background( 255, 205, 210 ); //yläosan väri
   background(cloud1);
   fill(209,233,233); // alaosan väri
   beginShape();
@@ -321,8 +237,7 @@ void drawScene3() {
     vertex(width, height);
     vertex(0, height);
     endShape(CLOSE);
-  //MILLAN
-// Add velocity to the location.
+
   location.add(velocity);
   // Add gravity to velocity
   velocity.add(gravity);
@@ -334,8 +249,7 @@ void drawScene3() {
     //location.y = height;
   }
 
-    translate(location.x, location.y);
-  //noStroke();
+  translate(location.x, location.y);
   stroke(255, 50);
   sphereDetail(25);
   fill( 33, 33, 33 );
@@ -352,26 +266,7 @@ void drawScene4() {
   if (x2 < width) {
     copy(clouds3, 0, 0, clouds3.width, height, x2, 0, clouds3.width, height);
   }
-  /*
-    //MILLAN
-  background(255,220,245); //yläosan väri
-  fill(0); // alaosan väri
-  beginShape();
-  float xoff = 0;
-  //Horisontaalisesti määritetty loopilla
-  for (float xmuuttuja = 0; xmuuttuja <= width; xmuuttuja ++) 
-    {
-    //ymuuttuja mäpätty noisen suhteen
-    float ymuuttuja = map(noise(xoff, yoff), 0, 1, 10, 900);
-    vertex(xmuuttuja, ymuuttuja);
-    xoff = xoff + 5;
-    }
-    yoff = yoff + 0.01;
-    vertex(width, height);
-    vertex(0, height);
-    endShape(CLOSE);
-  //MILLAN
-  */
+
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
@@ -409,26 +304,7 @@ void drawScene5() {
   if (x2 < width) {
     copy(clouds3, 0, 0, clouds3.width, height, x2, 0, clouds3.width, height);
   }
-  /*
-    //MILLAN
-  background(255,154,254); //yläosan väri
-  fill(0); // alaosan väri
-  beginShape();
-  float xoff = 0;
-  //Horisontaalisesti määritetty loopilla
-  for (float xmuuttuja = 0; xmuuttuja <= width; xmuuttuja ++) 
-    {
-    //ymuuttuja mäpätty noisen suhteen
-    float ymuuttuja = map(noise(xoff, yoff), 0, 1, 200, 800);
-    vertex(xmuuttuja, ymuuttuja);
-    xoff = xoff + 0.05;
-    }
-    yoff = yoff + 1;
-    vertex(width, height);
-    vertex(0, height);
-    endShape(CLOSE);
-  //MILLAN
-  */
+
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
@@ -441,7 +317,6 @@ void drawScene5() {
     //location.y = height;
   }
   
-
   rx = rx*0.9 + 50;
   ry = ry*0.9 + 50;
   translate(location.x, location.y);
@@ -466,10 +341,7 @@ void drawScene6() {
   if (x2 < width) {
     copy(clouds3, 0, 0, clouds3.width, height, x2, 0, clouds3.width, height);
   }
-  
-    //MILLAN
 
-  //MILLAN
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
@@ -506,26 +378,7 @@ void drawScene7() {
   if (x2 < width) {
     copy(clouds4, 0, 0, clouds4.width, height, x2, 0, clouds4.width, height);
   }
-  /*
-  //MILLAN
-  background(127); //yläosan väri
-  fill(0); // alaosan väri
-  beginShape();
-  float xoff = 0;
-  //Horisontaalisesti määritetty loopilla
-  for (float xmuuttuja = 0; xmuuttuja <= width; xmuuttuja ++) 
-    {
-    //ymuuttuja mäpätty noisen suhteen
-    float ymuuttuja = map(noise(xoff, yoff), 0, 1, 300, 900);
-    vertex(xmuuttuja, ymuuttuja);
-    xoff = xoff + 0.005;
-    }
-    yoff = yoff + 0.01;
-    vertex(width, height);
-    vertex(0, height);
-    endShape(CLOSE);
-  //MILLAN
-  */
+
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
@@ -579,7 +432,6 @@ void drawScene8() {
     vertex(width, height);
     vertex(0, height);
     endShape(CLOSE);
-  //MILLAN
   */
 // Add velocity to the location.
   location.add(velocity);
@@ -616,27 +468,8 @@ void drawScene9() {
   if (x2 < width) {
     copy(clouds5, 0, 0, clouds5.width, height, x2, 0, clouds5.width, height);
   }
-  /*
-  
-   background(stars); //yläosan väri
-  fill(0); // alaosan väri
-  beginShape();
-  float xoff = 0;
-  //Horisontaalisesti määritetty loopilla
-  for (float xmuuttuja = 0; xmuuttuja <= width; xmuuttuja ++) 
-    {
-    //ymuuttuja mäpätty noisen suhteen
-    float ymuuttuja = map(noise(xoff, yoff), 0, 1, 200, 800);
-    vertex(xmuuttuja, ymuuttuja);
-    xoff = xoff + 0.05;
-    }
-    yoff = yoff + 0.1;
-    vertex(width, height);
-    vertex(0, height);
-    endShape(CLOSE);
-  //MILLAN
-  */
-    image(lettu, (width - lettu.width/6), (height - lettu.height/6), lettu.width/6, lettu.height/6);
+
+  image(lettu, (width - lettu.width/5), (height - lettu.height/5), lettu.width/5, lettu.height/5);
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
@@ -666,7 +499,6 @@ void drawScene9() {
 
 // IHAN LOPPUHÄIVYTYS *********************** LOPPU ***************************************
 void drawScene10() {
-  //MILLAN
    background(clouds3); //yläosan väri
    fill (0);
   beginShape();
@@ -683,7 +515,7 @@ void drawScene10() {
     vertex(width, height);
     vertex(0, height);
     endShape(CLOSE);
-  //MILLAN
+
 // Add velocity to the location.
   location.add(velocity);
   // Add gravity to velocity
@@ -711,13 +543,6 @@ class Pelo
   float phi = random(TWO_PI);
   float largo = random(1.15, 1.2);
   float theta = asin(z/radio);
-
-  /*Pelo() { // what's wrong with a constructor here
-    z = random(-radio, radio);
-    phi = random(TWO_PI);
-    largo = random(1.15, 1.2);
-    theta = asin(z/radio);
-  }*/
 
   void dibujar() {
 
